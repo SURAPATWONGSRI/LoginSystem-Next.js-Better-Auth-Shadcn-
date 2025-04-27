@@ -1,21 +1,29 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Container } from "@/components/ui/container";
 
-const page = () => {
-  const onClick = () => {
-    alert("Hello World");
-  };
-
+const Page = () => {
   return (
-    <div>
-      <h1 className="text-4xl font-sebold mb-2">
-        Login System With BetterAuth Next.js Prisma Neon
-      </h1>
-      <Button onClick={onClick} size={"lg"}>
-        Click me
-      </Button>
+    <div className="flex items-center justify-center min-h-screen  p-4">
+      <Container>
+        <Card className="w-full max-w-lg mx-auto ">
+          <CardHeader>
+            <CardTitle className="text-4xl font-bold text-center">
+              Login System
+            </CardTitle>
+            <CardDescription className="text-center">
+              With BetterAuth Next.js Prisma Neon
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </Container>
     </div>
   );
 };
 
-export default page;
+export default Page;

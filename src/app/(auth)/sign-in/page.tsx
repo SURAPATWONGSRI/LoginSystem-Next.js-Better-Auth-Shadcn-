@@ -19,9 +19,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { signInFormSchema } from "@/lib/auth-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 export default function SignIn() {
@@ -35,7 +37,28 @@ export default function SignIn() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof signInFormSchema>) {
+  async function onSubmit(values: z.infer<typeof signInFormSchema>) {
+    const { email, password } = values;
+    const { data, error } = await authClient.signIn.email(
+      {
+        email,
+        password,
+        callbackURL: "/dashboard",
+      },
+      {
+        onRequest: () => {
+          //show loading
+          toast("please wait...");
+        },
+        onSuccess: () => {
+          form.reset();
+        },
+        onError: (ctx) => {
+          // display the error message
+          toast(ctx.error.message);
+        },
+      }
+    );
     console.log(values);
   }
   return (
